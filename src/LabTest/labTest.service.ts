@@ -32,6 +32,10 @@ export class LabTestService {
             .andWhere(' labTests.type2 = :name2', {name2: type2})
             .orderBy('labTests.date', 'DESC')
             .getOne();
-        return selectedLabTest.labTests;
+        const testInfo = [];
+        for (const test of selectedLabTest.labTests){
+            testInfo.push(test.info);
+        }
+        return testInfo;
     }
 }
