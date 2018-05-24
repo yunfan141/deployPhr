@@ -19,10 +19,19 @@ export class ContactsEntity{
     fax: string;
 
     @Column({ nullable: true })
-    relation: string;
+    relationship: string;
 
-    @Column('simple-array')
-    location: string[];
+    @Column({ nullable: true })
+    specialization: string;
+
+    @Column({ nullable: true })
+    location1: string;
+
+    @Column({ nullable: true })
+    location2: string;
+
+    @Column({ nullable: true })
+    location3: string;
 
     @Column()
     group: string;

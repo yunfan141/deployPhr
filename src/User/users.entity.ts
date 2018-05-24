@@ -14,10 +14,31 @@ export class UsersEntity {
     password: string;
 
     @Column()
-    gender: string;
+    email: string;
 
     @Column()
-    age: number;
+    securityQuestion: string;
+
+    @Column()
+    securityAnswer: string;
+
+    @Column({ nullable: true })
+    firstname: string;
+
+    @Column({ nullable: true })
+    lastname: string;
+
+    @Column({ nullable: true })
+    tel: string;
+
+    @Column({ nullable: true })
+    address: string;
+
+    @Column({ nullable: true })
+    gender: string;
+
+    @Column('date',{ nullable: true })
+    birthday: any;
 
     @OneToMany(type => LabTestEntity, labTest => labTest.user)
     labTests: labTest[];

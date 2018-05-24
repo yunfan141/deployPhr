@@ -13,21 +13,8 @@ export class ContactsService {
         .createQueryBuilder('user')
         .where('user.id = :name', { name: id })
         .getOne();
-        const contact = new ContactsEntity();
-        contact.user = theUser;
-        contact.firstname = theContact.firstname;
-        contact.lastname = theContact.lastname;
-        contact.group = theContact.group;
-        contact.tel = theContact.tel;
-        contact.fax = theContact.fax;
-        contact.location = [];
-        for (const l of theContact.location){
-            if (l !== ''){
-                contact.location.push(l);
-            }
-        }
-        contact.location;
-        return await getRepository(ContactsEntity).save(contact);
+        theContact.user = theUser;
+        return await getRepository(ContactsEntity).save(theContact);
     }
 
     public async getContactsByUser(id: number): Promise<any>{

@@ -9,15 +9,29 @@ export class UsersService {
         @Inject('UsersRepository') private readonly usersRepository: Repository<UsersEntity>,
     ){}
 
-    public async createToken(user) {
-        const secretOrKey = 'secret', expiresIn = 60 * 60;
-        const user_name = { username : user.username }
-           const token = jwt.sign(user_name, secretOrKey, {expiresIn});
+    // public async createToken(user) {
+    //     const secretOrKey = 'secret', expiresIn = 60 * 60*24*30;
+    //     const user_name = { username : user.username }
+    //        const token = jwt.sign(user_name, secretOrKey, {expiresIn});
     
-        return {
-            expires_in: expiresIn,
-            access_token: token,
-        };
+    //     return {
+    //         expires_in: expiresIn,
+    //         access_token: token,
+    //     };
+    // }
+
+    public async createToken(user : any){
+        // const theUser = this.usersRepository.findOne({where: {username : user.username, password : user.password}}) id undefined error
+        const theUser = await getRepository(UsersEntity)
+        .createQueryBuilder('user')
+        .where('user.username = :username', { username: user.username })
+        .andWhere('user.password = :password', { password: user.password })
+        .getOne();
+        console.log(theUser);
+        return await jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60),
+            user_id : theUser.id
+        }, 'myprecious', {algorithm: 'HS384'})
     }
 
     public async getUsers(): Promise<Array<UsersEntity>>{
@@ -31,6 +45,17 @@ export class UsersService {
     public async addUsers(users: any): Promise<UsersEntity>{
         return await this.usersRepository.save(users);
     }
+
+    // public async updateUserById(users: any,id: number): Promise<UsersEntity>{
+    //     const user = await getRepository(UsersEntity)
+    //     .createQueryBuilder()
+    //     .update()
+    //     .set({})
+    // }
+
+    // public async updateUserById(users: any,id: number): Promise<UsersEntity>{
+    //     return await this.usersRepository.updateById(id, users);
+    // }
 
     public async loginValidate(users: any): Promise<boolean>{
         if (await this.usersRepository.findOne({where: {username : users.username, password : users.password}})){
