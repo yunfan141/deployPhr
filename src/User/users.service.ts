@@ -29,7 +29,7 @@ export class UsersService {
         .getOne();
         console.log(theUser);
         return await jwt.sign({
-            exp: Math.floor(Date.now() / 1000) + (60 * 60),
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 30),
             user_id : theUser.id
         }, 'myprecious', {algorithm: 'HS384'})
     }

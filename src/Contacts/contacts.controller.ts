@@ -5,6 +5,11 @@ import {ContactsService} from './Contacts.service';
 export class ContactsController{
     constructor(private contactsService: ContactsService){}
 
+    @Get('doctors/:id')
+    public async getDoctorContacts(@Param() params){
+        return await this.contactsService.getDoctorContacts(params.id);
+    }
+
     @Get(':id')
     public async getContactsByUser(@Param() params){
         return await this.contactsService.getContactsByUser(params.id);

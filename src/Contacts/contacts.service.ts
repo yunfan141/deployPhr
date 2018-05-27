@@ -25,4 +25,41 @@ export class ContactsService {
             .getOne();
         return selectedContacts.contacts;
     }
+
+    public async getDoctorContacts(id: number): Promise<any>{
+        const selectedContacts = await getRepository(UsersEntity)
+            .createQueryBuilder('users')
+            .leftJoinAndSelect('users.contacts', 'contacts')
+            .where('users.id = :name', {name: id})
+            .getOne();
+        // const selectedDoctors = selectedContacts.contacts.map((item) => {
+        //     if (item.group.includes('doctor')){
+        //         console.log('doctorssss');
+        //         return item;
+        //     }
+        // });
+        const selectedDoctors = [];
+        for (const item of selectedContacts.contacts){
+            if (item.group.includes('doctor')){
+                item.locations = [];
+                item.locations.push(item.location1);
+                item.locations.push(item.location2);
+                item.locations.push(item.location3);
+                selectedDoctors.push(item);
+            }
+        }
+        // const selectedDoctorsfinal = selectedDoctors.map((item) => {
+        //     if (item !== undefined ){
+        //         return item;
+        //     }
+        // });
+        // const selectedDoctorsfinal = selectedDoctors.map((item) => {
+        //     item.location = [];
+        //     item.location.push(item.location1);
+        //     item.location.push(item.location1);
+        //     item.location.push(item.location1);
+        // });
+        console.log(selectedDoctors);
+        return selectedDoctors;
+    }
 }

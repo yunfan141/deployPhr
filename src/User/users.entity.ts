@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
 import {LabTestEntity} from '../LabTest/LabTest.entity';
 import {ContactsEntity} from '../Contacts/Contacts.entity';
+import {AppointmentsEntity} from '../Appointments/Appointments.entity.ts';
 
 @Entity()
 export class UsersEntity {
@@ -37,8 +38,11 @@ export class UsersEntity {
     @Column({ nullable: true })
     gender: string;
 
-    @Column('date',{ nullable: true })
+    @Column('date', { nullable: true })
     birthday: any;
+
+    @OneToMany(type => AppointmentsEntity, appointment => appointment.user)
+    appointments: appointment[];
 
     @OneToMany(type => LabTestEntity, labTest => labTest.user)
     labTests: labTest[];

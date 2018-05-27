@@ -1,7 +1,8 @@
 import {Module, NestModule, MiddlewaresConsumer, RequestMethod} from '@nestjs/common';
 import {UsersModule} from './User/users.module';
 import {LabTestModule} from './LabTest/labTest.module';
-import {ContactsModule} from 'Contacts/contacts.module';
+import {ContactsModule} from './Contacts/contacts.module';
+import {AppointmentsModule} from './Appointments/appointments.module';
 import { CorsMiddleware } from '@nest-middlewares/cors';
 
 @Module({
@@ -9,6 +10,7 @@ import { CorsMiddleware } from '@nest-middlewares/cors';
     UsersModule,
     LabTestModule,
     ContactsModule,
+    AppointmentsModule,
   ],
 })
 export class AppModule {
