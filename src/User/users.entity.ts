@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
 import {LabTestEntity} from '../LabTest/LabTest.entity';
 import {ContactsEntity} from '../Contacts/Contacts.entity';
-import {AppointmentsEntity} from '../Appointments/Appointments.entity.ts';
+import {AppointmentsEntity} from '../Appointments/Appointments.entity';
 
 @Entity()
 export class UsersEntity {
@@ -42,7 +42,7 @@ export class UsersEntity {
     birthday: any;
 
     @OneToMany(type => AppointmentsEntity, appointment => appointment.user)
-    appointments: appointment[];
+    appointments: AppointmentsEntity[];
 
     @OneToMany(type => LabTestEntity, labTest => labTest.user)
     labTests: labTest[];

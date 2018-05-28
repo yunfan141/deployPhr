@@ -1,7 +1,7 @@
 import {Module, NestModule, MiddlewaresConsumer, RequestMethod} from '@nestjs/common';
 import { DatabaseModule } from '../Database/database.module';
-import {AppointmentsService} from './appointments.service.ts';
-import {AppointmentsController} from './appointments.controller.ts';
+import {AppointmentsService} from './appointments.service';
+import {AppointmentsController} from './appointments.controller';
 
 @Module({
     imports: [DatabaseModule],

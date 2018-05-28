@@ -59,7 +59,6 @@ export class ContactsService {
         //     item.location.push(item.location1);
         //     item.location.push(item.location1);
         // });
-        console.log(selectedDoctors);
         return selectedDoctors;
     }
 }

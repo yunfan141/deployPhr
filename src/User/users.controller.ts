@@ -1,13 +1,23 @@
 import {Controller, Post, Param, Body, Get} from '@nestjs/common';
 import {UsersService} from './users.service';
 
-@Controller('api/Users')
+@Controller('api/users')
 export class UsersController{
     constructor(private usersService: UsersService){}
 
     @Get()
     public async getUsers(){
         return await this.usersService.getUsers();
+    }
+
+    @Get('profile/:id')
+    public async getUsersById(@Param() params){
+        return await this.usersService.getUsersById(params.id);
+    }
+
+    @Post('profile/:id')
+    public async updateUserById(@Param() params, @Body() user: any){
+        return await this.usersService.updateUserById(params.id, user);
     }
 
     @Get('test')
