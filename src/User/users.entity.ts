@@ -2,7 +2,8 @@ import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
 import {LabTestEntity} from '../LabTest/LabTest.entity';
 import {ContactsEntity} from '../Contacts/Contacts.entity';
 import {AppointmentsEntity} from '../Appointments/Appointments.entity';
-
+import {TrackersEntity} from '../Trackers/Trackers.entity';
+import {HistoryEntity} from '../History/History.entity';
 @Entity()
 export class UsersEntity {
     @PrimaryGeneratedColumn()
@@ -38,6 +39,9 @@ export class UsersEntity {
     @Column({ nullable: true })
     gender: string;
 
+    @Column({ nullable: true })
+    race: string;
+
     @Column('date', { nullable: true })
     birthday: any;
 
@@ -49,5 +53,11 @@ export class UsersEntity {
 
     @OneToMany(type => ContactsEntity, contact => contact.user)
     contacts: contact[];
+
+    @OneToMany(type => TrackersEntity, tracker => tracker.user)
+    trackers: tracker[];
+
+    @OneToMany(type => HistoryEntity, history => history.user)
+    historys: history[];
 
 }

@@ -4,6 +4,8 @@ import {LabTestModule} from './LabTest/labTest.module';
 import {ContactsModule} from './Contacts/contacts.module';
 import {AppointmentsModule} from './Appointments/appointments.module';
 import { CorsMiddleware } from '@nest-middlewares/cors';
+import {TrackersModule} from './Trackers/trackers.module';
+import {HistoryModule} from './History/history.module';
 
 @Module({
   imports: [
@@ -11,6 +13,8 @@ import { CorsMiddleware } from '@nest-middlewares/cors';
     LabTestModule,
     ContactsModule,
     AppointmentsModule,
+    TrackersModule,
+    HistoryModule,
   ],
 })
 export class AppModule {

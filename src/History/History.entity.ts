@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 import {UsersEntity} from '../User/users.entity';
 
 @Entity()
-export class TrackersEntity{
+export class HistoryEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,6 +12,6 @@ export class TrackersEntity{
     @Column('jsonb')
     info: any;
 
-    @ManyToOne(type => UsersEntity, user => user.trackers)
+    @ManyToOne(type => UsersEntity, user => user.historys)
     user: UsersEntity;
 }

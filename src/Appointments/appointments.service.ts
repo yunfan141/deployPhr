@@ -30,7 +30,15 @@ export class AppointmentsService {
         .leftJoinAndSelect('users.appointments', 'appointments')
         .where('users.id = :name', {name: id})
         .getOne();
-        return userAndAppointments.appointments;
+        return userAndAppointments.appointments.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 
     public async getReminderAppointments(id: number){
@@ -47,9 +55,6 @@ export class AppointmentsService {
         for (const theAppointment of appointments){
             const appointmentDate = new Date(theAppointment.date);
             if (appointmentDate.getTime() > nowDate.getTime() && appointmentDate.getTime() < endDate.getTime()){
-                    console.log(nowDate);
-                    console.log(appointmentDate);
-                    console.log('date');
                     reminderAppointments.push(theAppointment);
             }
         }
