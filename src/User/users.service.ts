@@ -48,7 +48,7 @@ export class UsersService {
         .update()
         .set({email: user.email,
         firstname: user.firstname, lastname: user.lastname, tel: user.tel, address: user.address,
-        gender: user.gender, birthday: user.birthday})
+        gender: user.gender, birthday: user.birthday, race: user.race})
         .where('id = :name', {name: id})
         .execute();
     }

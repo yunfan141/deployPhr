@@ -9,6 +9,10 @@ export class UsersController{
     public async getUsers(){
         return await this.usersService.getUsers();
     }
+    @Get('yunfan')
+    public async show(){
+        return 'Love Yimeng';
+    }
 
     @Get('profile/:id')
     public async getUsersById(@Param() params){
