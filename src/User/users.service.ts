@@ -34,8 +34,14 @@ export class UsersService {
         }, 'myprecious', {algorithm: 'HS384'});
     }
 
-    public async getUsers(): Promise<Array<UsersEntity>>{
-        return await this.usersRepository.find();
+    public async getUserId(user: any){
+        // const theUser = this.usersRepository.findOne({where: {username : user.username, password : user.password}}) id undefined error
+        const theUser = await getRepository(UsersEntity)
+        .createQueryBuilder('user')
+        .where('user.username = :username', { username: user.username })
+        .andWhere('user.password = :password', { password: user.password })
+        .getOne();
+        return theUser.id;
     }
 
     public async getUsersById(id: number): Promise<UsersEntity>{

@@ -22,7 +22,7 @@ export class ContactsEntity{
     relationship: string;
 
     @Column({ nullable: true })
-    specialization: string;
+    specialty: string;
 
     @Column({ nullable: true })
     location1: string;

@@ -37,7 +37,7 @@ export class UsersController{
     @Post('login')
     public async Login(@Body() users: any){
         if (await this.usersService.loginValidate(users)){
-            return await this.usersService.createToken(users);
+            return await this.usersService.getUserId(users);
         }
         else{
             return 'login fail';
