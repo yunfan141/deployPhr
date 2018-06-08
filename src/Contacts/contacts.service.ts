@@ -42,13 +42,13 @@ export class ContactsService {
         for (const item of selectedContacts.contacts){
             if (item.group.includes('doctor')){
                 item.locations = [];
-                if (!item.location1){
+                if (item.location1 !== ''){
                     item.locations.push(item.location1);
                 }
-                if (!item.location2){
+                if (item.location2 !== ''){
                     item.locations.push(item.location2);
                 }
-                if (!item.location3){
+                if (item.location3 !== ''){
                     item.locations.push(item.location3);
                 }
                 selectedDoctors.push(item);
