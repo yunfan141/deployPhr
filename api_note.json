@@ -1,0 +1,84 @@
+baseurl = 'https://phrbackend.herokuapp.com/'
+
+api/users
+
+@Get('profile/:id')
+get sample:
+{
+    "id": 2,
+    "username": "testuser2",
+    "password": "234567",
+    "email": "bb@gmail.com",
+    "securityQuestion": "1+1",
+    "securityAnswer": "2",
+    "firstname": "James",
+    "lastname": "Lanister",
+    "tel": "6666666666",
+    "address": "fifth 0001",
+    "gender": "man",
+    "race": "l",
+    "birthday": "1994-04-01"
+}
+
+@Post('profile/:id')
+any json
+
+@Post('signup')
+post sample:
+{
+    "username": "testuser2",
+    "password": "234567",
+    "email": "bb@gmail.com",
+    "securityQuestion": "1+1",
+    "securityAnswer": "2",
+    [other option]
+}
+
+@Post('login')
+post sample:
+{
+    "username": "testuser2",
+    "password": "234567",
+}
+return userid such as: 2
+
+
+
+api/contacts
+
+@Get('doctors/:id')
+return doctor contact info
+
+@Get(':id')
+return user's all contacts
+
+@Post(':id')
+psot user's contact
+
+
+
+api/trackers
+
+@Get(':type/:id')
+return any json you post
+
+@Post(':type/:id')
+post any json
+
+
+
+api/history
+@Get(':type/:id')
+return any json you post 
+
+@Post(':type/:id')
+any json 
+
+
+
+'api/appointment'
+@Get(':id')
+return appointment 
+
+@Post(':id')
+psot appointment
