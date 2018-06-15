@@ -62,7 +62,6 @@ export class UsersService {
     public async addUsers(users: any): Promise<any>{
         const user = await this.usersRepository.findOne({where: {username: users.username}});
         const rsp = {};
-        this.usersRepository.save(users);
         if (user){
             rsp.id = -1;
             rsp.exist = true;
@@ -70,6 +69,7 @@ export class UsersService {
         else{
             rsp.id = user.id;
             rsp.exist = false;
+            this.usersRepository.save(users);
         }
         return rsp;
     }
