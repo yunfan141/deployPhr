@@ -59,8 +59,19 @@ export class UsersService {
         .execute();
     }
 
-    public async addUsers(users: any): Promise<UsersEntity>{
-        return await this.usersRepository.save(users);
+    public async addUsers(users: any): Promise<any>{
+        const user = await this.usersRepository.findOne({where: {username: users.username}});
+        const rsp = {};
+        this.usersRepository.save(users);
+        if (user){
+            rsp.id = -1;
+            rsp.exist = true;
+        }
+        else{
+            rsp.id = user.id;
+            rsp.exist = false;
+        }
+        return rsp;
     }
 
     // public async updateUserById(users: any,id: number): Promise<UsersEntity>{
