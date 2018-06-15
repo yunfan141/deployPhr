@@ -42,8 +42,8 @@ export class UsersEntity {
     @Column({ nullable: true })
     race: string;
 
-    @Column('date', { nullable: true })
-    birthday: any;
+    @Column({ nullable: true })
+    birthday: string;
 
     @OneToMany(type => AppointmentsEntity, appointment => appointment.user)
     appointments: AppointmentsEntity[];
