@@ -67,7 +67,7 @@ export class UsersService {
             rsp.exist = true;
         }
         else{
-            rsp.id = user.id;
+            rsp.id = users.id;
             rsp.exist = false;
             this.usersRepository.save(users);
         }
