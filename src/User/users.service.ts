@@ -67,9 +67,10 @@ export class UsersService {
             rsp.exist = true;
         }
         else{
-            rsp.id = users.id;
-            rsp.exist = false;
             this.usersRepository.save(users);
+            const newuser = await this.usersRepository.findOne({where: {username: users.username}});
+            rsp.id = newuser.id;
+            rsp.exist = false;
         }
         return rsp;
     }
