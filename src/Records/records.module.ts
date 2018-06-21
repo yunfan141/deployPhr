@@ -1,7 +1,7 @@
 import {Module, NestModule, MiddlewaresConsumer, RequestMethod} from '@nestjs/common';
 import { DatabaseModule } from '../Database/database.module';
-import {RecordsService} from './Records.service';
-import {RecordsController} from './Records.controller';
+import {RecordsService} from './records.service';
+import {RecordsController} from './records.controller';
 
 @Module({
     imports: [DatabaseModule],
