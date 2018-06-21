@@ -3,13 +3,12 @@ import {LabTestService} from './labTest.service';
 import {UsersService} from '../User/users.service';
 import { LabTestEntity } from './LabTest.entity';
 
-@Controller('LabTest')
+@Controller('api/records/labTest')
 export class LabTestController{
     constructor(private labTestService: LabTestService){}
 
     @Get('/category')
     public async getCategory(){
-        await this.labTestService.addCategory();
         return await this.labTestService.getCategory();
     }
 
