@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 import {UsersEntity} from '../User/users.entity';
+import {LabTestCategoryEntity} from './LabTestCategory.entity';
 
 @Entity()
 export class LabTestEntity {
@@ -7,17 +8,23 @@ export class LabTestEntity {
     id: number;
 
     @Column()
-    type1: string;
+    result: number;
 
     @Column()
-    type2: string;
+    abnormal: boolean;
 
     @Column('date')
     date: any;
 
-    @Column('jsonb')
-    info: any;
+    @Column()
+    note: string;
+
+    @Column()
+    subtest: string;
 
     @ManyToOne(type => UsersEntity, user => user.labTests)
     user: UsersEntity;
+
+    @ManyToOne(type => LabTestCategoryEntity, test => test.labTests)
+    test: LabTestCategoryEntity;
 }

@@ -7,14 +7,20 @@ import { LabTestEntity } from './LabTest.entity';
 export class LabTestController{
     constructor(private labTestService: LabTestService){}
 
-    @Get('/:type1/:type2/:id')
-    public async getLabTestByUser(@Param() params){
-        return await this.labTestService.getLabTestByUser(params.id, params.type1, params.type2);
+    @Get('/category')
+    public async getCategory(){
+        await this.labTestService.addCategory();
+        return await this.labTestService.getCategory();
     }
 
-    @Post('/:type1/:type2/:id')
+    @Get('/:id')
+    public async getLabTestByUser(@Param() params){
+        return await this.labTestService.getLabTestByUser(params.id);
+    }
+
+    @Post('/:testid/:id')
     public async addLabTest(@Body() body: any, @Param() params){
-        return await this.labTestService.addLabTest(body.info, body.date, params.id, params.type1, params.type2);
+        return await this.labTestService.addLabTest(params.testid, params.id, body.subtest, body.result, body.abnormal, body.note, body.date);
     }
 
 }
