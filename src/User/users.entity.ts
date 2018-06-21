@@ -4,6 +4,7 @@ import {ContactsEntity} from '../Contacts/Contacts.entity';
 import {AppointmentsEntity} from '../Appointments/Appointments.entity';
 import {TrackersEntity} from '../Trackers/Trackers.entity';
 import {HistoryEntity} from '../History/History.entity';
+import {RecordsEntity} from '../Records/Records.entity';
 @Entity()
 export class UsersEntity {
     @PrimaryGeneratedColumn()
@@ -49,15 +50,18 @@ export class UsersEntity {
     appointments: AppointmentsEntity[];
 
     @OneToMany(type => LabTestEntity, labTest => labTest.user)
-    labTests: labTest[];
+    labTests: LabTestEntity[];
 
     @OneToMany(type => ContactsEntity, contact => contact.user)
-    contacts: contact[];
+    contacts: ContactsEntity[];
 
     @OneToMany(type => TrackersEntity, tracker => tracker.user)
-    trackers: tracker[];
+    trackers: TrackersEntity[];
 
     @OneToMany(type => HistoryEntity, history => history.user)
-    historys: history[];
+    historys: HistoryEntity[];
+
+    @OneToMany(type => RecordsEntity, record => record.user)
+    records: RecordsEntity[];
 
 }

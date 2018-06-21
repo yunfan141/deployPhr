@@ -40,7 +40,6 @@ export class HistoryService {
         .where('users.id = :name', {name: id})
         .andWhere('historys.type = :typename', {typename: 'social'})
         .getOne();
-        console.log('hhhhhhhhhhhhhhhhhh');
         if (userAndSocialHistory === undefined){
             return null;
         }

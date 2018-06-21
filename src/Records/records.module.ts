@@ -1,0 +1,14 @@
+import {Module, NestModule, MiddlewaresConsumer, RequestMethod} from '@nestjs/common';
+import { DatabaseModule } from '../Database/database.module';
+import {RecordsService} from './Records.service';
+import {RecordsController} from './Records.controller';
+
+@Module({
+    imports: [DatabaseModule],
+    components: [
+        RecordsService,
+    ],
+    controllers: [RecordsController],
+})
+
+export class RecordsModule{}
