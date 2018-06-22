@@ -138,7 +138,7 @@ export class LabTestService {
                     if (item.subtest === test.subtest){
                         delete test.id;
                         delete test.subtest;
-                        item.result.push(test);
+                        item.results.push(test);
                         flag = 1;
                     }
                 }
