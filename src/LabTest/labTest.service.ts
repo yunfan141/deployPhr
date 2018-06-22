@@ -44,12 +44,8 @@ export class LabTestService {
         .createQueryBuilder('test')
         .where('test.id = :name', { name: testid })
         .getOne();
-        console.log(theTest);
         const theSubtest = theTest.subtest;
         if (theSubtest.find(item => item === subtest) === undefined){
-            console.log(theSubtest);
-            console.log('ififififiifififififififififfifiifif');
-            console.log(subtest);
             theSubtest.push(subtest);
             await getRepository(LabTestCategoryEntity)
             .createQueryBuilder('update')
@@ -79,18 +75,88 @@ export class LabTestService {
         const result = [];
         for (const test of selectedLabTest.labTests){
             console.log(test);
-            test.id = test.test.id;
-            test.name = test.subtest;
-            test.unit = test.test.unit;
-            test.isnumber = test.test.isnumber;
-            delete test.user;
-            delete test.test;
-            result.push(test);
+            const testid = test.id;
+            const testresult = await getRepository(LabTestEntity)
+            .createQueryBuilder('labtest')
+            .leftJoinAndSelect('labtest.test', 'test')
+            .where('labtest.id = :name', {name: testid})
+            .andWhere('labtest.abnormal = :abnormal', {abnormal: false})
+            .orderBy('labtest.date', 'DESC')
+            .getOne();
+            const testCategory = testresult.test;
+            console.log(testCategory);
+            const abnormalTest = new Object();
+            abnormalTest.id = testCategory.id;
+            abnormalTest.name = testCategory.name;
+            abnormalTest.unit = testCategory.unit;
+            abnormalTest.isnumber = testCategory.isnumber;
+            abnormalTest.result = test.result;
+            abnormalTest.abnormal = test.abnormal;
+            abnormalTest.date = test.date;
+            abnormalTest.note = test.note;
+            result.push(abnormalTest);
         }
         return result;
     }
 
-    public async getLabTestByUserAndType(testid: number, id: number): Promise<any>{
+    public async getLabTestByUserAndType(categoryid: number, id: number): Promise<any>{
+        const selectedLabTest = await getRepository(UsersEntity)
+            .createQueryBuilder('users')
+            .leftJoinAndSelect('users.labTests', 'labTests')
+            .where('users.id = :name', {name: id})
+            .orderBy('labTests.date', 'DESC')
+            .getOne();
+        const finalresult = [];
+        function testitem(subtest, result){
+            this.subtest = subtest;
+            this.result = result;
+        }
+        for (const test of selectedLabTest.labTests){
+            console.log(test);
+            const theTest = test.id;
+            const testresult = await getRepository(LabTestEntity)
+            .createQueryBuilder('labtest')
+            .leftJoinAndSelect('labtest.test', 'test')
+            .where('labtest.id = :name', {name: theTest})
+            .andWhere('labtest.abnormal = :abnormal', {abnormal: false})
+            .andWhere('test.id = :idname', {idname: categoryid})
+            .orderBy('labtest.date', 'DESC')
+            .getOne();
+            console.log(test);
+            if (testresult !== undefined){
+                if (finalresult === null){
+                    const subtest = test.subtest;
+                    delete test.id;
+                    delete test.subtest;
+                    const result = [];
+                    result.push(test);
+                    const theTestitem = new testitem(subtest, result);
+                    finalresult.push(theTestitem);
+                }
+                let flag = 0;
+                for (const item of finalresult){
+                    if (item.subtest === test.subtest){
+                        delete test.id;
+                        delete test.subtest;
+                        item.result.push(test);
+                        flag = 1;
+                    }
+                }
+                if (flag === 0){
+                    const subtest = test.subtest;
+                    delete test.id;
+                    delete test.subtest;
+                    const result = [];
+                    result.push(test);
+                    const theTestitem = new testitem(subtest, result);
+                    finalresult.push(theTestitem);
+                }
+
+            }
+
+            console.log(finalresult);
+        }
+        return finalresult;
     }
 
     public async getCategory(): Promise<any>{

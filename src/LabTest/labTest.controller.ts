@@ -17,6 +17,11 @@ export class LabTestController{
         return await this.labTestService.getLabTestByUser(params.id);
     }
 
+    @Get('/:testid/:id')
+    public async getLabTegetLabTestByUserAndTypestByUser(@Param() params){
+        return await this.labTestService.getLabTestByUserAndType(params.testid, params.id);
+    }
+
     @Post('/:testid/:id')
     public async addLabTest(@Body() body: any, @Param() params){
         return await this.labTestService.addLabTest(params.testid, params.id, body.subtest, body.result, body.abnormal, body.note, body.date);

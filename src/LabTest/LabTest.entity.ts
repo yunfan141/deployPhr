@@ -8,7 +8,7 @@ export class LabTestEntity {
     id: number;
 
     @Column()
-    result: number;
+    result: string;
 
     @Column()
     abnormal: boolean;
