@@ -107,9 +107,9 @@ export class LabTestService {
             .orderBy('labTests.date', 'DESC')
             .getOne();
         const finalresult = [];
-        function testitem(subtest, result){
+        function testitem(subtest, results){
             this.subtest = subtest;
-            this.result = result;
+            this.results = result;
         }
         for (const test of selectedLabTest.labTests){
             console.log(test);
