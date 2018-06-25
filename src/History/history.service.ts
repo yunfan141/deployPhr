@@ -30,7 +30,8 @@ export class HistoryService {
         info.socialType = socialType;
         socialHistory.info = info;
         socialHistory.type = 'social';
-        return await getRepository(HistoryEntity).save(socialHistory);
+        await getRepository(HistoryEntity).save(socialHistory);
+        return 'save sucess';
     }
 
     public async getSocialHistory(id: number){
@@ -44,6 +45,15 @@ export class HistoryService {
             return null;
         }
         const socialHistoryInfo = userAndSocialHistory.historys.map((item) => item.info);
+        socialHistoryInfo.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
         const socialHistoryList = {smoking: [], alcohol: [], drug: [], travel: [], housing: []};
         socialHistoryInfo.forEach((item) => {
             const socialType = item.socialType;
@@ -71,7 +81,15 @@ export class HistoryService {
             return null;
         }
         const historyInfo = userAndHistory.historys.map((item) => item.info);
-        return historyInfo;
+        return historyInfo.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 
     public async getReminderHistory(id: number){

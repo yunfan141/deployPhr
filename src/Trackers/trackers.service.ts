@@ -32,7 +32,15 @@ export class TrackersService {
                 thisTypeTrackersInfo.push(thetrackers.info);
             }
         }
-        return thisTypeTrackersInfo;
+        return thisTypeTrackersInfo.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 
     public async getReminderTrackers(id: number){

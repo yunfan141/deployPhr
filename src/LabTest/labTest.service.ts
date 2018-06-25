@@ -96,7 +96,15 @@ export class LabTestService {
             abnormalTest.note = test.note;
             result.push(abnormalTest);
         }
-        return result;
+        return result.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 
     public async getLabTestByUserAndType(categoryid: number, id: number): Promise<any>{
@@ -156,7 +164,15 @@ export class LabTestService {
 
             console.log(finalresult);
         }
-        return finalresult;
+        return finalresult.sort(function compare(a, b) {
+            if (a.results.date < b.results.date) {
+              return -1;
+            }
+            if (a.results.date > b.results.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 
     public async getCategory(): Promise<any>{
