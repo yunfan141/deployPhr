@@ -10,12 +10,6 @@ export class LabTestCategoryEntity {
     @Column()
     name: string;
 
-    @Column()
-    unit: string;
-
-    @Column()
-    isnumber: boolean;
-
     @Column('simple-array')
     subtest: string[];
 

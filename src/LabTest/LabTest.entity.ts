@@ -22,6 +22,9 @@ export class LabTestEntity {
     @Column()
     subtest: string;
 
+    @Column({ nullable: true })
+    unit: string;
+
     @ManyToOne(type => UsersEntity, user => user.labTests)
     user: UsersEntity;
 

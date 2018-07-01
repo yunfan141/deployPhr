@@ -35,7 +35,7 @@ export class LabTestService {
     }
 
     public async addLabTest(testid: number, id: number, subtest: string,
-                            result: number, abnormal: boolean, note: string, date: Date): Promise<LabTestEntity>{
+                            result: number, unit: string, abnormal: boolean, note: string, date: Date): Promise<LabTestEntity>{
         const theUser = await getRepository(UsersEntity)
         .createQueryBuilder('user')
         .where('user.id = :name', { name: id })
@@ -59,6 +59,7 @@ export class LabTestService {
         labTest.date = date;
         labTest.note = note;
         labTest.result = result;
+        labTest.unit = unit;
         labTest.abnormal = abnormal;
         labTest.subtest = subtest;
         labTest.test = theTest;
@@ -88,9 +89,8 @@ export class LabTestService {
             const abnormalTest = new Object();
             abnormalTest.id = testCategory.id;
             abnormalTest.name = testCategory.name;
-            abnormalTest.unit = testCategory.unit;
-            abnormalTest.isnumber = testCategory.isnumber;
             abnormalTest.result = test.result;
+            abnormalTest.unit = test.unit;
             abnormalTest.abnormal = test.abnormal;
             abnormalTest.date = test.date;
             abnormalTest.note = test.note;
@@ -115,8 +115,9 @@ export class LabTestService {
             .orderBy('labTests.date', 'DESC')
             .getOne();
         const finalresult = [];
-        function testitem(subtest, result){
+        function testitem(subtest, unit, result){
             this.subtest = subtest;
+            this.unit = unit;
             this.results = result;
         }
         for (const test of selectedLabTest.labTests){
@@ -134,29 +135,37 @@ export class LabTestService {
             if (testresult !== undefined){
                 if (finalresult === null){
                     const subtest = test.subtest;
+                    const unit = test.unit;
                     delete test.id;
                     delete test.subtest;
+                    delete test.unit;
                     const result = [];
                     result.push(test);
-                    const theTestitem = new testitem(subtest, result);
+                    const theTestitem = new testitem(subtest, unit, result);
                     finalresult.push(theTestitem);
                 }
-                let flag = 0;
+                let flag = 0; // indicate if there is  subset already exist
                 for (const item of finalresult){
                     if (item.subtest === test.subtest){
+                        if (test.unit != null){
+                            item.unit = test.unit;
+                        }
                         delete test.id;
                         delete test.subtest;
+                        delete test.unit;
                         item.results.push(test);
                         flag = 1;
                     }
                 }
                 if (flag === 0){
                     const subtest = test.subtest;
+                    const unit = test.unit;
                     delete test.id;
                     delete test.subtest;
+                    delete test.unit;
                     const result = [];
                     result.push(test);
-                    const theTestitem = new testitem(subtest, result);
+                    const theTestitem = new testitem(subtest, unit, result);
                     finalresult.push(theTestitem);
                 }
 
