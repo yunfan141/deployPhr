@@ -9,7 +9,7 @@ export class LabTestController{
 
     @Get('/category')
     public async getCategory(){
-        // this.labTestService.addCategory();
+        this.labTestService.addCategory();
         return await this.labTestService.getCategory();
     }
 
