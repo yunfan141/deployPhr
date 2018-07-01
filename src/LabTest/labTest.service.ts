@@ -17,18 +17,104 @@ export class LabTestService {
         .into(LabTestCategoryEntity)
         .values([
             {
-                id: 1,
-                name: 'ANA',
-                unit: '',
-                isnumber: false,
-                subtest: ['sss', 'sdsdas', 'sds']
+                id: 3,
+                name: 'PTT (Partial Thromboplastin Time)',
+                subtest: ['PTT (Partial Thromboplastin Time)'],
             },
             {
-                id: 2,
-                name: 'BMP (Basic Metabolic Panel)',
-                unit: 'mg/dL',
-                isnumber: true,
-                subtest: ['sss', 'sdsdas', 'sds']
+                id: 4,
+                name: 'Glycohemoglobin (Hemoglobin A1C)',
+                subtest: ['Glycohemoglobin (Hemoglobin A1C)'],
+            },
+            {
+                id: 5,
+                name: 'CBC (Complete Blood Count)',
+                subtest: ['CBC (Complete Blood Count)'],
+            },
+            {
+                id: 6,
+                name: 'CMP (Comprehensive Metabolic Panel)',
+                subtest: ['CMP (Comprehensive Metabolic Panel)'],
+            },
+            {
+                id: 7,
+                name: 'ESR (Sedimentation Rate)',
+                subtest: ['ESR (Sedimentation Rate)'],
+            },
+            {
+                id: 8,
+                name: 'Flu (Influenza A and B Screen)',
+                subtest: ['Flu (Influenza A and B Screen)'],
+            },
+            {
+                id: 9,
+                name: 'Glucose Level',
+                subtest: ['Glucose Level'],
+            },
+            {
+                id: 10,
+                name: 'hCG',
+                subtest: ['hCG'],
+            },
+            {
+                id: 11,
+                name: 'HIV Antibody (HIV 1/2 Ag/Ab 4th Generation with Reflex)',
+                subtest: ['HIV Antibody (HIV 1/2 Ag/Ab 4th Generation with Reflex)'],
+            },
+            {
+                id: 12,
+                name: 'Lipid Panel (or Lipid Profile)',
+                subtest: ['Lipid Panel (or Lipid Profile)'],
+            },
+            {
+                id: 13,
+                name: 'Liver Function Panel (LFT)',
+                subtest: ['Liver Function Panel (LFT)'],
+            },
+            {
+                id: 14,
+                name: 'Lyme Antibody w/Reflex Immunoblot',
+                subtest: ['Lyme Antibody w/Reflex Immunoblot'],
+            },
+            {
+                id: 15,
+                name: 'Microalbumin, Urine',
+                subtest: ['Microalbumin, Urine'],
+            },
+            {
+                id: 16,
+                name: 'Mono',
+                subtest: ['Mono'],
+            },
+            {
+                id: 17,
+                name: 'Pap Smear',
+                subtest: ['Pap Smear'],
+            },
+            {
+                id: 18,
+                name: 'PSA (Prostate Specific Antigen)',
+                subtest: ['PSA (Prostate Specific Antigen)'],
+            },
+            {
+                id: 19,
+                name: 'PT (Protime)',
+                subtest: ['PT (Protime)'],
+            },
+            {
+                id: 20,
+                name: 'Semen Analysis',
+                subtest: ['Semen Analysis'],
+            },
+            {
+                id: 21,
+                name: 'Stool Culture',
+                subtest: ['Stool Culture'],
+            },
+            {
+                id: 22,
+                name: 'TSH, High Sensitivity (Thyroid Stimulating Hormone)',
+                subtest: ['TSH, High Sensitivity (Thyroid Stimulating Hormone)'],
             },
         ])
         .execute();
