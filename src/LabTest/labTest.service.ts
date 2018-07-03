@@ -170,17 +170,19 @@ export class LabTestService {
             .andWhere('labtest.abnormal = :abnormal', {abnormal: true})
             .orderBy('labtest.date', 'DESC')
             .getOne();
-            const testCategory = testresult.test;
-            console.log(testCategory);
-            const abnormalTest = new Object();
-            abnormalTest.id = testCategory.id;
-            abnormalTest.name = testCategory.name;
-            abnormalTest.result = test.result;
-            abnormalTest.unit = test.unit;
-            abnormalTest.abnormal = test.abnormal;
-            abnormalTest.date = test.date;
-            abnormalTest.note = test.note;
-            result.push(abnormalTest);
+            if (testresult !== undefined){
+                const testCategory = testresult.test;
+                console.log(testCategory);
+                const abnormalTest = new Object();
+                abnormalTest.id = testCategory.id;
+                abnormalTest.name = testCategory.name;
+                abnormalTest.result = test.result;
+                abnormalTest.unit = test.unit;
+                abnormalTest.abnormal = test.abnormal;
+                abnormalTest.date = test.date;
+                abnormalTest.note = test.note;
+                result.push(abnormalTest);
+            }
         }
         return result.sort(function compare(a, b) {
             if (a.date < b.date) {
@@ -213,7 +215,6 @@ export class LabTestService {
             .createQueryBuilder('labtest')
             .leftJoinAndSelect('labtest.test', 'test')
             .where('labtest.id = :name', {name: theTest})
-            .andWhere('labtest.abnormal = :abnormal', {abnormal: true})
             .andWhere('test.id = :idname', {idname: categoryid})
             .orderBy('labtest.date', 'DESC')
             .getOne();
