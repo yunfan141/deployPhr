@@ -7,6 +7,7 @@ import { CorsMiddleware } from '@nest-middlewares/cors';
 import {TrackersModule} from './Trackers/trackers.module';
 import {HistoryModule} from './History/history.module';
 import { RecordsModule } from './Records/records.module';
+import {DiagnosticsModule} from './Diagnostic/diagnostic.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RecordsModule } from './Records/records.module';
     TrackersModule,
     HistoryModule,
     RecordsModule,
+    DiagnosticsModule,
   ],
 })
 export class AppModule {
