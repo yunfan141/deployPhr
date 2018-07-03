@@ -6,6 +6,7 @@ import {RecordsEntity} from '../Records/Records.entity';
 @Component()
 export class RecordsService {
     constructor(
+        @Inject('RecordsRepository') private readonly recordsRepository: Repository<RecordsEntity>,
     ){}
 
     public async addRecords(id: number, type: string, info: any){
@@ -40,5 +41,32 @@ export class RecordsService {
             }
             return 0;
           });
+    }
+
+    public async deleteRecords(id: number, recordid: number, type: string){
+        const userAndRecords = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.records', 'records')
+        .where('users.id = :name', {name: id})
+        .andWhere('records.type = :typename', {typename: type})
+        .getOne();
+        if (userAndRecords === undefined){
+            return null;
+        }
+        const RecordsInfo = userAndRecords.records;
+        RecordsInfo.sort(function compare(a, b) {
+            if (a.info.date < b.info.date) {
+              return -1;
+            }
+            if (a.info.date > b.info.date) {
+              return 1;
+            }
+            return 0;
+          });
+        const deleteId = RecordsInfo[recordid];
+        console.log(deleteId);
+        // return await getRepository(RecordsEntity)
+        // .delete(deleteId);
+        return await this.recordsRepository.delete(deleteId);
     }
 }

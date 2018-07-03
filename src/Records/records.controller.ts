@@ -1,4 +1,4 @@
-import {Controller, Post, Param, Body, Get} from '@nestjs/common';
+import {Controller, Post, Param, Body, Get, Delete} from '@nestjs/common';
 import {RecordsService} from './records.service';
 
 @Controller('api/records')
@@ -13,6 +13,11 @@ export class RecordsController{
     @Post(':type/:id')
     public async addRecords(@Param() params, @Body() body){
         return await this.recordsService.addRecords(params.id, params.type, body);
+    }
+
+    @Delete(':type/:recordid/:id')
+    public async deleteRecords(@Param() params, @Body() body){
+        return await this.recordsService.deleteRecords(params.id, params.recordid, params.type);
     }
 
 }
