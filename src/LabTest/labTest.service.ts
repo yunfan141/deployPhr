@@ -167,7 +167,7 @@ export class LabTestService {
             .createQueryBuilder('labtest')
             .leftJoinAndSelect('labtest.test', 'test')
             .where('labtest.id = :name', {name: testid})
-            .andWhere('labtest.abnormal = :abnormal', {abnormal: false})
+            .andWhere('labtest.abnormal = :abnormal', {abnormal: true})
             .orderBy('labtest.date', 'DESC')
             .getOne();
             const testCategory = testresult.test;
@@ -213,7 +213,7 @@ export class LabTestService {
             .createQueryBuilder('labtest')
             .leftJoinAndSelect('labtest.test', 'test')
             .where('labtest.id = :name', {name: theTest})
-            .andWhere('labtest.abnormal = :abnormal', {abnormal: false})
+            .andWhere('labtest.abnormal = :abnormal', {abnormal: true})
             .andWhere('test.id = :idname', {idname: categoryid})
             .orderBy('labtest.date', 'DESC')
             .getOne();
