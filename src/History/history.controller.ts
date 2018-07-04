@@ -1,4 +1,4 @@
-import {Controller, Post, Param, Body, Get} from '@nestjs/common';
+import {Controller, Post, Param, Body, Get, Delete} from '@nestjs/common';
 import {HistoryService} from './history.service';
 
 @Controller('api/history')
@@ -21,6 +21,16 @@ export class HistoryController{
     @Post('social/:type/:id')
     public async addSocialHistory(@Param() params, @Body() body){
         return await this.historyService.addSocialHistory(params.id, params.type, body);
+    }
+
+    @Delete(':type/:recordid/:id')
+    public async deleteHistory(@Param() params){
+        return await this.historyService.deleteHistory(params.id, params.recordid, params.type);
+    }
+
+    @Delete(':type/:subtype/:recordid/:id')
+    public async deleteSocialHistory(@Param() params){
+        return await this.historyService.deleteSocialHistory(params.id, params.recordid, params.subtype);
     }
 
 }

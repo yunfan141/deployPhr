@@ -63,6 +63,25 @@ export class HistoryService {
         return socialHistoryList;
     }
 
+    public async deleteSocialHistory(id: number, recordid: number, subtype: string){
+        const userAndSocialHistory = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.historys', 'historys')
+        .where('users.id = :name', {name: id})
+        .andWhere('historys.type = :typename', {typename: 'social'})
+        .getOne();
+        if (userAndSocialHistory === undefined){
+            return null;
+        }
+        const socialHistoryInfo = userAndSocialHistory.historys;
+        const socialHistoryList = {smoking: [], alcohol: [], drug: [], travel: [], housing: []};
+        socialHistoryInfo.forEach((item) => {
+            const socialType = item.info.socialType;
+            socialHistoryList[socialType].push(item);
+        });
+        return await getRepository(HistoryEntity).delete(socialHistoryList[subtype][recordid]);
+    }
+
     public async getHistory(id: number, type: string){
         const userAndHistory = await getRepository(UsersEntity)
         .createQueryBuilder('users')
@@ -70,13 +89,6 @@ export class HistoryService {
         .where('users.id = :name', {name: id})
         .andWhere('historys.type = :typename', {typename: type})
         .getOne();
-        // const thisTypeHistoryInfo = [];
-        // for (const theHistory of userAndHistory.historys){
-        //     if (theHistory.type === type){
-        //         thisTypeHistoryInfo.push(theHistory.info);
-        //     }
-        // }
-        console.log(userAndHistory);
         if (userAndHistory === undefined){
             return null;
         }
@@ -90,6 +102,29 @@ export class HistoryService {
             }
             return 0;
           });
+    }
+
+    public async deleteHistory(id: number, recordid: number, type: string){
+        const userAndHistory = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.historys', 'historys')
+        .where('users.id = :name', {name: id})
+        .andWhere('historys.type = :typename', {typename: type})
+        .getOne();
+        if (userAndHistory === undefined){
+            return null;
+        }
+        const historyInfo = userAndHistory.historys;
+        historyInfo.sort(function compare(a, b) {
+            if (a.info.date < b.info.date) {
+              return -1;
+            }
+            if (a.info.date > b.info.date) {
+              return 1;
+            }
+            return 0;
+          });
+        return await getRepository(HistoryEntity).delete(historyInfo[recordid]);
     }
 
     public async getReminderHistory(id: number){
