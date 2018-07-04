@@ -30,8 +30,7 @@ export class HistoryService {
         info.socialType = socialType;
         socialHistory.info = info;
         socialHistory.type = 'social';
-        await getRepository(HistoryEntity).save(socialHistory);
-        return 'save sucess';
+        return await getRepository(HistoryEntity).save(socialHistory); 
     }
 
     public async getSocialHistory(id: number){
