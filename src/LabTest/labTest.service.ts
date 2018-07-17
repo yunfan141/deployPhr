@@ -167,7 +167,7 @@ export class LabTestService {
             .createQueryBuilder('labtest')
             .leftJoinAndSelect('labtest.test', 'test')
             .where('labtest.id = :name', {name: testid})
-            .andWhere('labtest.abnormal = :abnormal', {abnormal: true})
+            .andWhere('labtest.abnormal = :abnormal', {abnormal: false})
             .orderBy('labtest.date', 'DESC')
             .getOne();
             if (testresult !== undefined){
@@ -184,7 +184,19 @@ export class LabTestService {
                 result.push(abnormalTest);
             }
         }
-        return result.sort(function compare(a, b) {
+        const nowDate = new Date();
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(nowDate.getDate() + 30);
+        startDate.setDate(nowDate.getDate() - 30);
+        const recentResult = [];
+        for (const theRecentResult of result){
+            const testDate = new Date(theRecentResult.date);
+            if (testDate.getTime() > startDate.getTime() && testDate.getTime() < endDate.getTime()){
+                recentResult.push(theRecentResult);
+            }
+        }
+        return recentResult.sort(function compare(a, b) {
             if (a.date < b.date) {
               return -1;
             }
