@@ -75,6 +75,54 @@ export class UsersService {
         return rsp;
     }
 
+    public async editPassword(id: number, pass: any){
+        const user = await this.usersRepository.findOne({where: {id: id}});
+        if (pass.currentPassword !== user.password){
+            return -1;
+        }
+        else{
+            await getRepository(UsersEntity)
+            .createQueryBuilder('user')
+            .update()
+            .set({password: pass.newPassword,
+            })
+            .where('id = :name', {name: id})
+            .execute();
+            return 1;
+
+        }
+    }
+
+    public async matchEmail(email: string){
+        const user = await this.usersRepository.findOne({where: {email: email}});
+        if (user){
+            return {id: user.id, securityQuestion: user.securityQuestion};
+        }
+        else{
+            return -1;
+        }
+    }
+
+    public async checkSecurityanswer(id: number, answer: any){
+        const user = await this.usersRepository.findOne({where: {id: id}});
+        if (user.securityAnswer == answer ){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+
+    }
+
+    public async resetPassword(id: number, password: string){
+        await getRepository(UsersEntity)
+            .createQueryBuilder('user')
+            .update()
+            .set({password: password})
+            .where('id = :name', {name: id})
+            .execute();
+    }
+
     // public async updateUserById(users: any,id: number): Promise<UsersEntity>{
     //     const user = await getRepository(UsersEntity)
     //     .createQueryBuilder()

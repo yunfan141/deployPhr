@@ -43,4 +43,24 @@ export class UsersController{
             return 'login fail';
         }
     }
+
+    @Post('editpassword/:id')
+    public async editPassword(@Param() params, @Body() password: any){
+        return await this.usersService.editPassword(params.id, password);
+    }
+
+    @Post('email')
+    public async matchEmail(@Body() email: any){
+        return await this.usersService.matchEmail(email);
+    }
+
+    @Post('securityanswer/:id')
+    public async checkAnswer(@Param() params, @Body() answer: any){
+        return await this.usersService.checkSecurityanswer(params.id, answer);
+    }
+
+    @Post('resetpassword/:id')
+    public async restPassword(@Param() params, @Body() password: string){
+        return await this.usersService.resetPassword(params.id, password);
+    }
 }
