@@ -26,7 +26,13 @@ export class LabTestController{
     @Post('/:testid/:id')
     public async addLabTest(@Body() body: any, @Param() params){
         // tslint:disable-next-line:max-line-length
-        return await this.labTestService.addLabTest(params.testid, params.id, body.subtest, body.result, body.unit, body.abnormal, body.note, body.date);
+        if (testid == 0){
+            
+        }
+        else{
+            return await this.labTestService.addLabTest(params.testid, params.id, body.subtest,
+             body.result, body.unit, body.abnormal, body.note, body.date);
+        }
     }
 
 }

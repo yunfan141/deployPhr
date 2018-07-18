@@ -41,6 +41,24 @@ export class AppointmentsService {
           });
     }
 
+    public async deleteAppointments(id: number, recordId: number){
+        const userAndAppointments = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.appointments', 'appointments')
+        .where('users.id = :name', {name: id})
+        .getOne();
+        const userAppointments = userAndAppointments.appointments.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
+        return await getRepository(AppointmentsEntity).delete(userAppointments[recordId]);
+    }
+
     public async getReminderAppointments(id: number){
         const userAndAppointments = await getRepository(UsersEntity)
         .createQueryBuilder('users')
