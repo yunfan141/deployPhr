@@ -41,6 +41,7 @@ export class DiagnosticsService {
             return 0;
         });
         const finalresult = [];
+        // tslint:disable-next-line:triple-equals
         if (typeid == 2 || typeid == 3 || typeid == 4 || typeid == 5){
             function diagnosticItem(organ, results){
                 this.organ = organ;
@@ -101,7 +102,7 @@ export class DiagnosticsService {
         }
         else{
             const item = result[subtypeid].results[resultid];
-            const name = result[subtypeid].organ;
+            const name = result[subtypeid].name;
             item.name = name;
             console.log(item);
             const theDiagnostic = await getRepository(DiagnosticEntity)
