@@ -1,4 +1,4 @@
-import {Controller, Post, Param, Body, Get} from '@nestjs/common';
+import {Controller, Post, Param, Body, Get, Delete} from '@nestjs/common';
 import {DiagnosticsService} from './diagnostic.service';
 
 @Controller('api/records/diagnosticprocedure')
@@ -13,6 +13,11 @@ export class DiagnosticController{
     @Post(':typeid/:id')
     public async addRecords(@Param() params, @Body() body){
         return await this.diagnosticsService.addDiagnostics(params.id, params.typeid, body);
+    }
+
+    @Delete(':typeid/:subtypeid/:resultid/:id')
+    public async deleteDiagnostic(@Param() params){
+        return await this.diagnosticsService.deleteDiagnostic(params.id, params.typeid, params.subtypeid, params.resultid);
     }
 
 }

@@ -49,9 +49,7 @@ export class DiagnosticsService {
             const organSet = new Set();
             DiagnosticsInfo.forEach( (item) => {
                 organSet.add(item.organ);
-                console.log(item);
             });
-            console.log(organSet);
             for (const organ of organSet){
                 const results = [];
                 DiagnosticsInfo.forEach( (item) => {
@@ -71,7 +69,6 @@ export class DiagnosticsService {
             const nameSet = new Set();
             DiagnosticsInfo.forEach( (item) => {
                 nameSet.add(item.name);
-                console.log(item);
             });
             for (const name of nameSet){
                 const results = [];
@@ -85,5 +82,35 @@ export class DiagnosticsService {
             }
         }
         return finalresult;
+    }
+
+    public async deleteDiagnostic(id: number, typeid: number, subtypeid: number, resultid: number){
+        const result = await this.getDiagnostics(id, typeid);
+        if (typeid == 2 || typeid == 3 || typeid == 4 || typeid == 5){
+            const item = result[subtypeid].results[resultid];
+            const organ = result[subtypeid].organ;
+            item.organ = organ;
+            console.log(item);
+            const theDiagnostic = await getRepository(DiagnosticEntity)
+            .createQueryBuilder('dig')
+            .where('dig.typeid = :name', { name: typeid})
+            .andWhere('dig.info = :info', {info: item})
+            .getOne();
+            console.log(theDiagnostic);
+            return await getRepository(DiagnosticEntity).delete(theDiagnostic);
+        }
+        else{
+            const item = result[subtypeid].results[resultid];
+            const name = result[subtypeid].organ;
+            item.name = name;
+            console.log(item);
+            const theDiagnostic = await getRepository(DiagnosticEntity)
+            .createQueryBuilder('dig')
+            .where('dig.typeid = :name', { name: typeid})
+            .andWhere('dig.info = :info', {info: item})
+            .getOne();
+            console.log(theDiagnostic);
+            return await getRepository(DiagnosticEntity).delete(theDiagnostic);
+        }
     }
 }
