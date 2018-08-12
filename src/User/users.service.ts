@@ -2,12 +2,14 @@ import { Component , Inject} from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import {Repository, getRepository, getConnection} from 'typeorm';
 import {UsersEntity} from './users.entity';
-
+import * as bcrypt from 'bcryptjs';
 @Component()
 export class UsersService {
     constructor(
         @Inject('UsersRepository') private readonly usersRepository: Repository<UsersEntity>,
-    ){}
+    ){
+        // const bcrypt = require('bcryptjs');
+    }
 
     // public async createToken(user) {
     //     const secretOrKey = 'secret', expiresIn = 60 * 60*24*30;
@@ -19,7 +21,6 @@ export class UsersService {
     //         access_token: token,
     //     };
     // }
-
     public async createToken(user: any){
         // const theUser = this.usersRepository.findOne({where: {username : user.username, password : user.password}}) id undefined error
         const theUser = await getRepository(UsersEntity)
@@ -39,7 +40,6 @@ export class UsersService {
         const theUser = await getRepository(UsersEntity)
         .createQueryBuilder('user')
         .where('user.username = :username', { username: user.username })
-        .andWhere('user.password = :password', { password: user.password })
         .getOne();
         return theUser.id;
     }
@@ -67,6 +67,8 @@ export class UsersService {
             rsp.exist = true;
         }
         else{
+            const salt = bcrypt.genSaltSync(10);
+            users.password = bcrypt.hashSync(users.password, salt);
             await this.usersRepository.save(users);
             const newuser = await this.usersRepository.findOne({where: {username: users.username}});
             rsp.id = newuser.id;
@@ -135,12 +137,14 @@ export class UsersService {
     // }
 
     public async loginValidate(users: any): Promise<boolean>{
-        if (await this.usersRepository.findOne({where: {username : users.username, password : users.password}})){
+        const theUser = await this.usersRepository.findOne({where: {username : users.username}});
+        const hash = theUser.password;
+        console.log(hash);
+        if (bcrypt.compareSync(users.password, hash) || users.password === hash){
             return true;
         }
         else{
             return false;
         }
     }
-
 }

@@ -1,4 +1,4 @@
-import {Controller, Post, Param, Body, Get} from '@nestjs/common';
+import {Controller, Post, Param, Body, Get, Delete} from '@nestjs/common';
 import {LabTestService} from './labTest.service';
 import {UsersService} from '../User/users.service';
 import { LabTestEntity } from './LabTest.entity';
@@ -28,6 +28,11 @@ export class LabTestController{
         // tslint:disable-next-line:max-line-length
             return await this.labTestService.addLabTest(params.testid, params.id, body.subtest,
              body.result, body.unit, body.abnormal, body.note, body.date);
+    }
+
+    @Delete('/:testid/:subtestid/:resultid/:id')
+    public async deleteLabtest(@Param() params){
+        return await this.labTestService.deleteLabtest(params.testid, params.subtestid, params.resultid, params.id);
     }
 
 }

@@ -160,6 +160,9 @@ export class LabTestService {
             .orderBy('labTests.date', 'DESC')
             .getOne();
         const result = [];
+        if (selectedLabTest === undefined){
+            return result;
+        }
         for (const test of selectedLabTest.labTests){
             console.log(test);
             const testid = test.id;
@@ -167,7 +170,6 @@ export class LabTestService {
             .createQueryBuilder('labtest')
             .leftJoinAndSelect('labtest.test', 'test')
             .where('labtest.id = :name', {name: testid})
-            .andWhere('labtest.abnormal = :abnormal', {abnormal: true})
             .orderBy('labtest.date', 'DESC')
             .getOne();
             if (testresult !== undefined){
@@ -215,6 +217,9 @@ export class LabTestService {
             .orderBy('labTests.date', 'DESC')
             .getOne();
         const finalresult = [];
+        if (selectedLabTest === undefined){
+            return finalresult;
+        }
         function testitem(subtest, unit, result){
             this.subtest = subtest;
             this.unit = unit;
@@ -240,6 +245,15 @@ export class LabTestService {
                     delete test.unit;
                     const result = [];
                     result.push(test);
+                    result.sort(function compare(a, b) {
+                        if (a.date < b.date) {
+                          return -1;
+                        }
+                        if (a.date > b.date) {
+                          return 1;
+                        }
+                        return 0;
+                      });
                     const theTestitem = new testitem(subtest, unit, result);
                     finalresult.push(theTestitem);
                 }
@@ -253,6 +267,15 @@ export class LabTestService {
                         delete test.subtest;
                         delete test.unit;
                         item.results.push(test);
+                        item.results.sort(function compare(a, b) {
+                            if (a.date < b.date) {
+                              return -1;
+                            }
+                            if (a.date > b.date) {
+                              return 1;
+                            }
+                            return 0;
+                          });
                         flag = 1;
                     }
                 }
@@ -264,6 +287,15 @@ export class LabTestService {
                     delete test.unit;
                     const result = [];
                     result.push(test);
+                    result.sort(function compare(a, b) {
+                        if (a.date < b.date) {
+                          return -1;
+                        }
+                        if (a.date > b.date) {
+                          return 1;
+                        }
+                        return 0;
+                      });
                     const theTestitem = new testitem(subtest, unit, result);
                     finalresult.push(theTestitem);
                 }
@@ -272,15 +304,101 @@ export class LabTestService {
 
             console.log(finalresult);
         }
-        return finalresult.sort(function compare(a, b) {
-            if (a.results.date < b.results.date) {
-              return -1;
+        return finalresult;
+    }
+
+    public async deleteLabtest(categoryid: number, subtestid: number, resultid: number, id: number){
+        const selectedLabTest = await getRepository(UsersEntity)
+            .createQueryBuilder('users')
+            .leftJoinAndSelect('users.labTests', 'labTests')
+            .where('users.id = :name', {name: id})
+            .orderBy('labTests.date', 'DESC')
+            .getOne();
+        const finalresult = [];
+        function testitem(subtest, unit, result){
+            this.subtest = subtest;
+            this.unit = unit;
+            this.results = result;
+        }
+        for (const test of selectedLabTest.labTests){
+            console.log(test);
+            const theTest = test.id;
+            const testresult = await getRepository(LabTestEntity)
+            .createQueryBuilder('labtest')
+            .leftJoinAndSelect('labtest.test', 'test')
+            .where('labtest.id = :name', {name: theTest})
+            .andWhere('test.id = :idname', {idname: categoryid})
+            .orderBy('labtest.date', 'DESC')
+            .getOne();
+            console.log(test);
+            if (testresult !== undefined){
+                if (finalresult === null){
+                    const subtest = test.subtest;
+                    const unit = test.unit;
+                    delete test.id;
+                    delete test.subtest;
+                    delete test.unit;
+                    const result = [];
+                    result.push(test);
+                    result.sort(function compare(a, b) {
+                        if (a.date < b.date) {
+                          return -1;
+                        }
+                        if (a.date > b.date) {
+                          return 1;
+                        }
+                        return 0;
+                      });
+                    const theTestitem = new testitem(subtest, unit, result);
+                    finalresult.push(theTestitem);
+                }
+                let flag = 0; // indicate if there is  subset already exist
+                for (const item of finalresult){
+                    if (item.subtest === test.subtest){
+                        if (test.unit != null){
+                            item.unit = test.unit;
+                        }
+                        delete test.subtest;
+                        delete test.unit;
+                        item.results.push(test);
+                        item.results.sort(function compare(a, b) {
+                            if (a.date < b.date) {
+                              return -1;
+                            }
+                            if (a.date > b.date) {
+                              return 1;
+                            }
+                            return 0;
+                          });
+                        flag = 1;
+                    }
+                }
+                if (flag === 0){
+                    const subtest = test.subtest;
+                    const unit = test.unit;
+                    delete test.subtest;
+                    delete test.unit;
+                    const result = [];
+                    result.push(test);
+                    result.sort(function compare(a, b) {
+                        if (a.date < b.date) {
+                          return -1;
+                        }
+                        if (a.date > b.date) {
+                          return 1;
+                        }
+                        return 0;
+                      });
+                    const theTestitem = new testitem(subtest, unit, result);
+                    finalresult.push(theTestitem);
+                }
+
             }
-            if (a.results.date > b.results.date) {
-              return 1;
-            }
-            return 0;
-          });
+
+            console.log(finalresult);
+        }
+        const theLabtestId = finalresult[subtestid].results[resultid].id;
+        return this.labTestRepository.delete(theLabtestId);
     }
 
     public async getCategory(): Promise<any>{
