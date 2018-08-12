@@ -27,6 +27,9 @@ export class TrackersService {
         .where('users.id = :name', {name: id})
         .getOne();
         const thisTypeTrackersInfo = [];
+        if (userAndTrackers === undefined){
+            return thisTypeTrackersInfo;
+        }
         for (const thetrackers of userAndTrackers.trackers){
             if (thetrackers.type === type){
                 thisTypeTrackersInfo.push(thetrackers.info);

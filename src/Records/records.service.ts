@@ -28,8 +28,9 @@ export class RecordsService {
         .where('users.id = :name', {name: id})
         .andWhere('records.type = :typename', {typename: type})
         .getOne();
+        const result = [];
         if (userAndRecords === undefined){
-            return null;
+            return result;
         }
         const RecordsInfo = userAndRecords.records.map((item) => item.info);
         return RecordsInfo.sort(function compare(a, b) {

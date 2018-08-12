@@ -41,7 +41,7 @@ export class HistoryService {
         .andWhere('historys.type = :typename', {typename: 'social'})
         .getOne();
         if (userAndSocialHistory === undefined){
-            return null;
+            return [];
         }
         const socialHistoryInfo = userAndSocialHistory.historys.map((item) => item.info);
         socialHistoryInfo.sort(function compare(a, b) {
@@ -89,7 +89,7 @@ export class HistoryService {
         .andWhere('historys.type = :typename', {typename: type})
         .getOne();
         if (userAndHistory === undefined){
-            return null;
+            return [];
         }
         const historyInfo = userAndHistory.historys.map((item) => item.info);
         return historyInfo.sort(function compare(a, b) {

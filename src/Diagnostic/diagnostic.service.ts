@@ -21,6 +21,7 @@ export class DiagnosticsService {
     }
 
     public async getDiagnostics(id: number, typeid: number){
+        const finalresult = [];
         const userAndDiagnostics = await getRepository(UsersEntity)
         .createQueryBuilder('users')
         .leftJoinAndSelect('users.diagnostics', 'diagnostics')
@@ -28,7 +29,7 @@ export class DiagnosticsService {
         .andWhere('diagnostics.typeid = :typename', {typename: typeid})
         .getOne();
         if (userAndDiagnostics === undefined){
-            return null;
+            return finalresult;
         }
         const DiagnosticsInfo = userAndDiagnostics.diagnostics.map((item) => item.info);
         DiagnosticsInfo.sort(function compare(a, b) {
@@ -40,7 +41,6 @@ export class DiagnosticsService {
             }
             return 0;
         });
-        const finalresult = [];
         // tslint:disable-next-line:triple-equals
         if (typeid == 2 || typeid == 3 || typeid == 4 || typeid == 5){
             function diagnosticItem(organ, results){
