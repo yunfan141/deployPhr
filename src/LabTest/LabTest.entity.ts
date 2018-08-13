@@ -11,7 +11,7 @@ export class LabTestEntity {
     result: string;
 
     @Column()
-    abnormal: boolean;
+    abnormal: string;
 
     @Column('date')
     date: any;
