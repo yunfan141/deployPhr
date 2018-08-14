@@ -30,7 +30,7 @@ export class LabTestService {
                 id: 2,
                 name: 'BMP (Basic Metabolic Panel)',
                 subtest: ['BMP (Basic Metabolic Panel)'],
-            }
+            },
             {
                 id: 3,
                 name: 'PTT (Partial Thromboplastin Time)',
