@@ -20,11 +20,11 @@ export class LabTestService {
                 id: 0,
                 name: 'oher',
                 subtest: ['other'],
-            }
+            },
             {
                 id: 1,
                 name: 'ANA',
-                subtest: ['AAA']
+                subtest: ['AAA'],
             },
             {
                 id: 2,
