@@ -17,6 +17,21 @@ export class LabTestService {
         .into(LabTestCategoryEntity)
         .values([
             {
+                id: 0,
+                name: 'oher',
+                subtest: ['other'],
+            }
+            {
+                id: 1,
+                name: 'ANA',
+                subtest: ['AAA']
+            },
+            {
+                id: 2,
+                name: 'BMP (Basic Metabolic Panel)',
+                subtest: ['BMP (Basic Metabolic Panel)'],
+            }
+            {
                 id: 3,
                 name: 'PTT (Partial Thromboplastin Time)',
                 subtest: ['PTT (Partial Thromboplastin Time)'],
