@@ -1,18 +1,18 @@
-version: "1"
+version: "3"
 services:
   node:
     image: "node:10"
     user: "node"
-    working_dir: /home/node/app
+    working_dir: /home/ubuntu/app/phr
     environment:
       - NODE_ENV=production
-      - PORT=8080
+      - PORT=3000
     volumes:
-      - ./:/home/node/app
+      - ./:/home/ubuntu/app/phr
     expose:
-      - "8080"
+      - "3000"
     ports:
-      - "443:8080"
+      - "3000:3000"
     command: "npm run start"
     links:
       - db
