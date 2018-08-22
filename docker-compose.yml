@@ -3,12 +3,12 @@ services:
   node:
     image: "node:10"
     user: "node"
-    working_dir: /home/ubuntu/app/phr
+    working_dir: /home/ubuntu/app/deployPhr
     environment:
       - NODE_ENV=production
       - PORT=3000
     volumes:
-      - ./:/home/ubuntu/app/phr
+      - ./:/home/ubuntu/app/deployPhr
     expose:
       - "3000"
     ports:
