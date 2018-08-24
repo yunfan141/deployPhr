@@ -10,8 +10,14 @@ export class TrackersController{
         return await this.trackersService.getTrackers(params.id, params.type);
     }
 
+    @Get(':days/:id')
+    public async getReminderTrackers(@Param() params){
+        return await this.trackersService.getReminderTrackers(params.id, params.days);
+    }
+
     @Post(':type/:id')
     public async addTrackers(@Param() params, @Body() body){
         return await this.trackersService.addTrackers(params.id, params.type, body);
     }
+
 }

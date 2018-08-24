@@ -59,7 +59,32 @@ export class AppointmentsService {
         return await getRepository(AppointmentsEntity).delete(userAppointments[recordId]);
     }
 
-    public async getReminderAppointments(id: number){
+    public async updateAppointment(id: number, recordId: number, newAppointment: any){
+        const userAndAppointments = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.appointments', 'appointments')
+        .where('users.id = :name', {name: id})
+        .getOne();
+        const userAppointments = userAndAppointments.appointments.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
+        const theDeleteAppointment = userAppointments[recordId];
+        return await getRepository(AppointmentsEntity)
+        .createQueryBuilder('upapp')
+        .update()
+        .set({date: newAppointment.date, time: newAppointment.time,
+            firstname: newAppointment.firstname, lastname: newAppointment.lastname, location: newAppointment.location})
+        .where('id = :name', {name: theDeleteAppointment.id})
+        .execute();
+    }
+
+    public async getReminderAppointments(days: number, id: number){
         const userAndAppointments = await getRepository(UsersEntity)
         .createQueryBuilder('users')
         .leftJoinAndSelect('users.appointments', 'appointments')
@@ -68,7 +93,7 @@ export class AppointmentsService {
         const appointments = userAndAppointments.appointments;
         const nowDate = new Date();
         const endDate = new Date();
-        endDate.setDate(nowDate.getDate() + 3);
+        endDate.setDate(nowDate.getDate() + days);
         const reminderAppointments = [];
         for (const theAppointment of appointments){
             const appointmentDate = new Date(theAppointment.date);

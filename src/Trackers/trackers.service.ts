@@ -46,7 +46,7 @@ export class TrackersService {
           });
     }
 
-    public async getReminderTrackers(id: number){
+    public async getReminderTrackers(id: number, days: number){
         const userAndTrackers = await getRepository(UsersEntity)
         .createQueryBuilder('users')
         .leftJoinAndSelect('users.Trackers', 'Trackers')
@@ -55,7 +55,7 @@ export class TrackersService {
         const trackers = userAndTrackers.trackers;
         const nowDate = new Date();
         const endDate = new Date();
-        endDate.setDate(nowDate.getDate() + 3);
+        endDate.setDate(nowDate.getDate() + days);
         const reminderTrackers = [];
         for (const thetracker of trackers){
             const trackerDate = new Date(thetracker.date);

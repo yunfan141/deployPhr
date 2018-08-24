@@ -1,14 +1,14 @@
 version: "3"
 services:
   node:
-    image: "node:10"
+    image: "node:8.9.3"
     user: "node"
-    working_dir: /home/ubuntu/app/deployPhr
+    working_dir: /Users/yunfanzhou/Desktop/PHR/backend
     environment:
       - NODE_ENV=production
       - PORT=3000
     volumes:
-      - ./:/home/ubuntu/app/deployPhr
+      - ./:/Users/yunfanzhou/Desktop/PHR/backend
     expose:
       - "3000"
     ports:

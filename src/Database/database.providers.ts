@@ -9,7 +9,7 @@ import { createConnection } from 'typeorm';
 //             port: 5432,
 //             username: 'postgres',
 //             password: 'zyf1994',
-//             database: 'mytest6',
+//             database: 'mytest7',
 //             entities: [
 //                 __dirname + '/../*/*.entity{.ts,.js}',
 //                 'src/User/Users.entity.ts',
