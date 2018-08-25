@@ -3,16 +3,16 @@ services:
   node:
     image: "node:8.9.3"
     user: "node"
-    working_dir: /Users/yunfanzhou/Desktop/PHR/backend
+    working_dir: /home/lmzhou/MobilePHR/deployPhr
     environment:
       - NODE_ENV=production
       - PORT=3000
     volumes:
-      - ./:/Users/yunfanzhou/Desktop/PHR/backend
+      - ./:/home/lmzhou/MobilePHR/deployPhr
     expose:
       - "3000"
     ports:
-      - "3000:3000"
+      - "7070:3000"
     command: "npm run start"
     links:
       - db

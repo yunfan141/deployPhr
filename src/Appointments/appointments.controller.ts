@@ -20,7 +20,7 @@ export class AppointmentsController{
         return await this.appointmentsService.addAppointments(params.id, body);
     }
 
-    @Post(':id/:recordid')
+    @Post('update/:recordid/:id')
     public async updateAppointment(@Param() params, @Body() body: any){
         return await this.appointmentsService.updateAppointment(params.id, params.recordid, body);
     }
