@@ -167,7 +167,7 @@ export class LabTestService {
         return await this.labTestRepository.save(labTest);
     }
 
-    public async getLabTestByUser(id: number): Promise<any>{
+    public async getLabTestByUser(id: number, days: number): Promise<any>{
         const selectedLabTest = await getRepository(UsersEntity)
             .createQueryBuilder('users')
             .leftJoinAndSelect('users.labTests', 'labTests')
@@ -204,8 +204,8 @@ export class LabTestService {
         const nowDate = new Date();
         const startDate = new Date();
         const endDate = new Date();
-        endDate.setDate(nowDate.getDate() + 30);
-        startDate.setDate(nowDate.getDate() - 30);
+        endDate.setDate(nowDate.getDate() + days);
+        startDate.setDate(nowDate.getDate() - days);
         const recentResult = [];
         for (const theRecentResult of result){
             const testDate = new Date(theRecentResult.date);

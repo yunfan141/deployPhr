@@ -17,9 +17,9 @@ export class LabTestController{
         return await this.labTestService.addCategory();
     }
 
-    @Get('/:id')
+    @Get('days/:days/:id')
     public async getLabTestByUser(@Param() params){
-        return await this.labTestService.getLabTestByUser(params.id);
+        return await this.labTestService.getLabTestByUser(params.id, params.days);
     }
 
     @Get('/:testid/:id')

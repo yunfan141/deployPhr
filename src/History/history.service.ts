@@ -126,7 +126,7 @@ export class HistoryService {
         return await getRepository(HistoryEntity).delete(historyInfo[recordid]);
     }
 
-    public async getReminderHistory(id: number){
+    public async getReminderHistory(id: number, days: number){
         const userAndHistory = await getRepository(UsersEntity)
         .createQueryBuilder('users')
         .leftJoinAndSelect('users.History', 'History')
@@ -134,12 +134,14 @@ export class HistoryService {
         .getOne();
         const History = userAndHistory.historys;
         const nowDate = new Date();
+        const startDate = new Date();
         const endDate = new Date();
-        endDate.setDate(nowDate.getDate() + 3);
+        endDate.setDate(nowDate.getDate() + days);
+        startDate.setDate(nowDate.getDate() - days);
         const reminderHistory = [];
         for (const thehistory of History){
-            const historyDate = new Date(thehistory.date);
-            if (historyDate.getTime() > nowDate.getTime() && historyDate.getTime() < endDate.getTime()){
+            const historyDate = new Date(thehistory.info.date);
+            if (historyDate.getTime() > startDate.getTime() && historyDate.getTime() < endDate.getTime()){
                     reminderHistory.push(thehistory);
             }
         }

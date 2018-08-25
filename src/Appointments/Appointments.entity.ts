@@ -21,6 +21,9 @@ export class AppointmentsEntity{
     @Column()
     location: string;
 
+    @Column()
+    doctorid: number;
+
     @ManyToOne(type => UsersEntity, user => user.appointments)
     user: UsersEntity;
 
