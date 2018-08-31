@@ -36,10 +36,11 @@ export class DiagnosticsService {
             const temp = item.info;
             const itemDate = new Date(temp.date);
             if (itemDate.getTime() > startDate.getTime() && itemDate.getTime() < endDate.getTime()){
-                temp.type = item.typeid;
+                temp.typeid = item.typeid;
                 result.push(temp);
             }
         }
+        return result;
     }
 
     public async getDiagnostics(id: number, typeid: number){
