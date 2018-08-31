@@ -141,7 +141,7 @@ export class HistoryService {
         const res = [];
         for (const thehistory of History){
             const item = thehistory.info;
-            item.type = thehistory.type;
+            item.historytype = thehistory.type;
             const historyDate = new Date(thehistory.info.date);
             if (historyDate.getTime() > startDate.getTime() && historyDate.getTime() < endDate.getTime()){
                     res.push(item);
