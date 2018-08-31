@@ -12,7 +12,7 @@ services:
     expose:
       - "3000"
     ports:
-      - "7070:3000"
+      - "443:3000"
     command: "npm run start"
     links:
       - db
