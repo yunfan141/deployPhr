@@ -129,7 +129,7 @@ export class HistoryService {
     public async getReminderHistory(id: number, days: number){
         const userAndHistory = await getRepository(UsersEntity)
         .createQueryBuilder('users')
-        .leftJoinAndSelect('users.History', 'History')
+        .leftJoinAndSelect('users.historys', 'historys')
         .where('users.id = :name', {name: id})
         .getOne();
         const History = userAndHistory.historys;
