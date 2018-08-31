@@ -55,12 +55,12 @@ export class UsersController{
     }
 
     @Post('securityanswer/:id')
-    public async checkAnswer(@Param() params, @Body() answer: any){
-        return await this.usersService.checkSecurityanswer(params.id, answer);
+    public async checkAnswer(@Param() params, @Body() body: any){
+        return await this.usersService.checkSecurityanswer(params.id, body.securityanswer);
     }
 
     @Post('resetpassword/:id')
-    public async restPassword(@Param() params, @Body() password: string){
-        return await this.usersService.resetPassword(params.id, password);
+    public async restPassword(@Param() params, @Body() body){
+        return await this.usersService.resetPassword(params.id, body.password);
     }
 }

@@ -107,7 +107,7 @@ export class UsersService {
         }
     }
 
-    public async checkSecurityanswer(id: number, answer: any){
+    public async checkSecurityanswer(id: number, answer: string){
         const user = await this.usersRepository.findOne({where: {id: id}});
         if (user.securityAnswer == answer ){
             return 1;
@@ -119,10 +119,12 @@ export class UsersService {
     }
 
     public async resetPassword(id: number, password: string){
+        const salt = bcrypt.genSaltSync(10);
+        const newHash  = bcrypt.hashSync(password, salt);
         await getRepository(UsersEntity)
             .createQueryBuilder('user')
             .update()
-            .set({password: password})
+            .set({password: newHash})
             .where('id = :name', {name: id})
             .execute();
     }
