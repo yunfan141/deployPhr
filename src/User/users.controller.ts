@@ -50,8 +50,8 @@ export class UsersController{
     }
 
     @Post('email')
-    public async matchEmail(@Body() email: any){
-        return await this.usersService.matchEmail(email);
+    public async matchEmail(@Body() body: any){
+        return await this.usersService.matchEmail(body.email);
     }
 
     @Post('securityanswer/:id')

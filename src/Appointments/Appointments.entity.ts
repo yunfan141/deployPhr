@@ -22,7 +22,7 @@ export class AppointmentsEntity{
     location: string;
 
     @Column({ nullable: true })
-    doctorid: number;
+    doctorid: string;
 
     @ManyToOne(type => UsersEntity, user => user.appointments)
     user: UsersEntity;
