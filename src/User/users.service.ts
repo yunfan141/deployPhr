@@ -79,18 +79,20 @@ export class UsersService {
 
     public async editPassword(id: number, pass: any){
         const user = await this.usersRepository.findOne({where: {id: id}});
-        if (pass.currentPassword !== user.password){
-            return -1;
-        }
-        else{
+        const hash = user.password;
+        if (bcrypt.compareSync(pass.currentPassword, hash)){
+            const salt = bcrypt.genSaltSync(10);
+            const newHash  = bcrypt.hashSync(pass.newPassword, salt);
             await getRepository(UsersEntity)
             .createQueryBuilder('user')
             .update()
-            .set({password: pass.newPassword,
+            .set({password: newHash,
             })
             .where('id = :name', {name: id})
             .execute();
-            return 1;
+        }
+        else{
+            return -1;
 
         }
     }
