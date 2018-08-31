@@ -22,7 +22,7 @@ export class ResourceService {
     public async getResource(id: number){
         const userAndResource = await getRepository(UsersEntity)
         .createQueryBuilder('users')
-        .leftJoinAndSelect('users.Resource', 'Resource')
+        .leftJoinAndSelect('users.resources', 'resources')
         .where('users.id = :name', {name: id})
         .getOne();
         const result = [];
