@@ -40,7 +40,7 @@ export class UsersController{
             return await this.usersService.getUserId(users);
         }
         else{
-            return 'login fail';
+            return -1;
         }
     }
 

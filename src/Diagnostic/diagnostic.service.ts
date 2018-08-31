@@ -85,23 +85,23 @@ export class DiagnosticsService {
             }
         }
         else{
-            function diagnosticItem2(name, results){
-                this.name = name;
+            function diagnosticItem2(testname, results){
+                this.testname = testname;
                 this.results = results;
             }
             const nameSet = new Set();
             DiagnosticsInfo.forEach( (item) => {
-                nameSet.add(item.name);
+                nameSet.add(item.testname);
             });
-            for (const name of nameSet){
+            for (const testname of nameSet){
                 const results = [];
                 DiagnosticsInfo.forEach( (item) => {
-                    if (item.name === name){
-                        delete item.name;
+                    if (item.testname === testname){
+                        delete item.testname;
                         results.push(item);
                     }
                 });
-                finalresult.push(new diagnosticItem2(name, results));
+                finalresult.push(new diagnosticItem2(testname, results));
             }
         }
         return finalresult;
