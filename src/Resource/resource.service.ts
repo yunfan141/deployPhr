@@ -6,6 +6,7 @@ import {ResourceEntity} from '../Resource/resource.entity';
 @Component()
 export class ResourceService {
     constructor(
+        @Inject('ResourceRepository') private readonly ResourceRepository: Repository<ResourceEntity>,
     ){}
 
     public async addResource(id: number, info: any){

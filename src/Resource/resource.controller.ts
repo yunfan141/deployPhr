@@ -16,7 +16,7 @@ export class ResourceController{
     }
 
     @Delete(':resourceid/:id')
-    public async deleteResource(@Param() params, @Body() body){
+    public async deleteResource(@Param() params){
         return await this.resourceService.deleteResource(params.id, params.resourceid);
     }
 
