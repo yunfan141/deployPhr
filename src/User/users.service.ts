@@ -90,6 +90,7 @@ export class UsersService {
             })
             .where('id = :name', {name: id})
             .execute();
+            return 1;
         }
         else{
             return -1;
@@ -127,6 +128,7 @@ export class UsersService {
             .set({password: newHash})
             .where('id = :name', {name: id})
             .execute();
+        return 1;
     }
 
     // public async updateUserById(users: any,id: number): Promise<UsersEntity>{
