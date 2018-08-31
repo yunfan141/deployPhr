@@ -10,12 +10,12 @@ export class ResourceController{
         return await this.resourceService.getResource(params.id);
     }
 
-    @Post(':type/:id')
+    @Post(':id')
     public async addResource(@Param() params, @Body() body){
         return await this.resourceService.addResource(params.id, body);
     }
 
-    @Delete(':type/:resourceid/:id')
+    @Delete(':resourceid/:id')
     public async deleteResource(@Param() params, @Body() body){
         return await this.resourceService.deleteResource(params.id, params.resourceid);
     }
