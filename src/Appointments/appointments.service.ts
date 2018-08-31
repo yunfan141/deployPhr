@@ -79,7 +79,8 @@ export class AppointmentsService {
         .createQueryBuilder('upapp')
         .update()
         .set({date: newAppointment.date, time: newAppointment.time,
-            firstname: newAppointment.firstname, lastname: newAppointment.lastname, location: newAppointment.location})
+            firstname: newAppointment.firstname, lastname: newAppointment.lastname,
+            location: newAppointment.location, doctorid: newAppointment.doctorid})
         .where('id = :name', {name: theDeleteAppointment.id})
         .execute();
     }
