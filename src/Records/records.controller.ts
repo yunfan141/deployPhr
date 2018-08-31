@@ -5,6 +5,11 @@ import {RecordsService} from './records.service';
 export class RecordsController{
     constructor(private recordsService: RecordsService){}
 
+    @Get('dyas/:days/:id')
+    public async getRecentRecords(@Param() params){
+        return await this.recordsService.getRecentrecords(params.id, params.days);
+    }
+
     @Get(':type/:id')
     public async getRecords(@Param() params){
         return await this.recordsService.getRecords(params.id, params.type);

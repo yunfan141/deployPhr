@@ -20,6 +20,28 @@ export class DiagnosticsService {
         return await getRepository(DiagnosticEntity).save(diagnostic);
     }
 
+    public async getRecentDiagnostics(id: number, days: number){
+        const nowDate = new Date();
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(nowDate.getDate() + days);
+        startDate.setDate(nowDate.getDate() - days);
+        const result = [];
+        const userAndDiagnostics = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.diagnostics', 'diagnostics')
+        .where('users.id = :name', {name: id})
+        .getOne();
+        for (const item of userAndDiagnostics.diagnostics){
+            const temp = item.info;
+            const itemDate = new Date(temp.date);
+            if (itemDate.getTime() > startDate.getTime() && itemDate.getTime() < endDate.getTime()){
+                temp.type = item.typeid;
+                result.push(temp);
+            }
+        }
+    }
+
     public async getDiagnostics(id: number, typeid: number){
         const finalresult = [];
         const userAndDiagnostics = await getRepository(UsersEntity)

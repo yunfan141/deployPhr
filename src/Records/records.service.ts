@@ -21,6 +21,37 @@ export class RecordsService {
         return await getRepository(RecordsEntity).save(record);
     }
 
+    public async getRecentrecords(id: number, days: number){
+        const nowDate = new Date();
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(nowDate.getDate() + days);
+        startDate.setDate(nowDate.getDate() - days);
+        const result = [];
+        const userAndrecords = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.records', 'records')
+        .where('users.id = :name', {name: id})
+        .getOne();
+        for (const item of userAndrecords.records){
+            const temp = item.info;
+            const itemDate = new Date(item.info.date);
+            if (itemDate.getTime() > startDate.getTime() && itemDate.getTime() < endDate.getTime()){
+                temp.type = item.type;
+                result.push(temp);
+            }
+        }
+        return result.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
+    }
+
     public async getRecords(id: number, type: string){
         const userAndRecords = await getRepository(UsersEntity)
         .createQueryBuilder('users')

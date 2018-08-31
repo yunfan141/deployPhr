@@ -18,8 +18,8 @@ export class LabTestController{
     }
 
     @Get('days/:days/:id')
-    public async getLabTestByUser(@Param() params){
-        return await this.labTestService.getLabTestByUser(params.id, params.days);
+    public async getRecentlabTests(@Param() params){
+        return await this.labTestService.getRecentlabTests(params.id, params.days);
     }
 
     @Get('/:testid/:id')

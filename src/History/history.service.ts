@@ -138,13 +138,23 @@ export class HistoryService {
         const endDate = new Date();
         endDate.setDate(nowDate.getDate() + days);
         startDate.setDate(nowDate.getDate() - days);
-        const reminderHistory = [];
+        const res = [];
         for (const thehistory of History){
+            const item = thehistory.info;
+            item.type = thehistory.type;
             const historyDate = new Date(thehistory.info.date);
             if (historyDate.getTime() > startDate.getTime() && historyDate.getTime() < endDate.getTime()){
-                    reminderHistory.push(thehistory);
+                    res.push(item);
             }
         }
-        return reminderHistory;
+        return res.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 }

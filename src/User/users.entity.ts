@@ -6,6 +6,8 @@ import {TrackersEntity} from '../Trackers/Trackers.entity';
 import {HistoryEntity} from '../History/History.entity';
 import {RecordsEntity} from '../Records/Records.entity';
 import {DiagnosticEntity} from '../Diagnostic/Diagnostic.entity';
+import {ResourceEntity} from '../Resource/resource.entity';
+
 @Entity()
 export class UsersEntity {
     @PrimaryGeneratedColumn()
@@ -67,4 +69,7 @@ export class UsersEntity {
 
     @OneToMany(type => DiagnosticEntity, diagnostic => diagnostic.user)
     diagnostics: DiagnosticEntity[];
+
+    @OneToMany(type => ResourceEntity, resource => resource.user)
+    resources: ResourceEntity[];
 }

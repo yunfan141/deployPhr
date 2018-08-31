@@ -8,7 +8,7 @@ import {TrackersModule} from './Trackers/trackers.module';
 import {HistoryModule} from './History/history.module';
 import { RecordsModule } from './Records/records.module';
 import {DiagnosticsModule} from './Diagnostic/diagnostic.module';
-
+import {ResourceModule} from './Resource/resource.module';
 @Module({
   imports: [
     UsersModule,
@@ -19,6 +19,7 @@ import {DiagnosticsModule} from './Diagnostic/diagnostic.module';
     HistoryModule,
     RecordsModule,
     DiagnosticsModule,
+    ResourceModule,
   ],
 })
 export class AppModule {

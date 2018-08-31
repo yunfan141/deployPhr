@@ -58,11 +58,21 @@ export class TrackersService {
         endDate.setDate(nowDate.getDate() + days);
         const reminderTrackers = [];
         for (const thetracker of trackers){
+            const item = thetracker.info;
             const trackerDate = new Date(thetracker.date);
             if (trackerDate.getTime() > nowDate.getTime() && trackerDate.getTime() < endDate.getTime()){
-                    reminderTrackers.push(thetracker);
+                item.type = thetracker.type;
+                reminderTrackers.push(item);
             }
         }
-        return reminderTrackers;
+        return reminderTrackers.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
     }
 }

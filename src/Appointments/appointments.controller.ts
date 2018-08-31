@@ -10,9 +10,9 @@ export class AppointmentsController{
         return await this.appointmentsService.getAppointments(params.id);
     }
 
-    @Get(':days/:id')
+    @Get('days/:days/:id')
     public async getReminderAppointments(@Param() params){
-        return await this.appointmentsService.getReminderAppointments(params.days,params.id);
+        return await this.appointmentsService.getReminderAppointments(params.days, params.id);
     }
 
     @Post(':id')

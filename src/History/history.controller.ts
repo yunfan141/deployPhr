@@ -5,6 +5,10 @@ import {HistoryService} from './history.service';
 export class HistoryController{
     constructor(private historyService: HistoryService){}
 
+    @Get('days/:days/:id')
+    public async getRecenthistory(@Param() params){
+        return await this.historyService.getReminderHistory(params.id, params.days);
+    }
     @Get(':type/:id')
     public async getHistory(@Param() params){
         if (params.type === 'social'){

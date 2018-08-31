@@ -5,6 +5,11 @@ import {DiagnosticsService} from './diagnostic.service';
 export class DiagnosticController{
     constructor(private diagnosticsService: DiagnosticsService){}
 
+    @Get('days/:days/:id')
+    public async getRencentRecords(@Param() params){
+        return await this.diagnosticsService.getRecentDiagnostics(params.id, params.days);
+    }
+
     @Get(':typeid/:id')
     public async getRecords(@Param() params){
         return await this.diagnosticsService.getDiagnostics(params.id, params.typeid);

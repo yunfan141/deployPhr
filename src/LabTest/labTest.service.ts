@@ -421,4 +421,33 @@ export class LabTestService {
         .createQueryBuilder('category2')
         .getMany();
     }
+
+    public async getRecentlabTests(id: number, days: number){
+        const nowDate = new Date();
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(nowDate.getDate() + days);
+        startDate.setDate(nowDate.getDate() - days);
+        const result = [];
+        const userAndlabTests = await getRepository(UsersEntity)
+        .createQueryBuilder('users')
+        .leftJoinAndSelect('users.labTests', 'labTests')
+        .where('users.id = :name', {name: id})
+        .getOne();
+        for (const item of userAndlabTests.labTests){
+            const itemDate = new Date(item.date);
+            if (itemDate.getTime() > startDate.getTime() && itemDate.getTime() < endDate.getTime()){
+                result.push(item);
+            }
+        }
+        return result.sort(function compare(a, b) {
+            if (a.date < b.date) {
+              return -1;
+            }
+            if (a.date > b.date) {
+              return 1;
+            }
+            return 0;
+          });
+    }
 }
