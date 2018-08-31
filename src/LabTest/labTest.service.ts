@@ -191,10 +191,11 @@ export class LabTestService {
                 const testCategory = testresult.test;
                 console.log(testCategory);
                 const abnormalTest = new Object();
-                abnormalTest.id = testCategory.id;
+                abnormalTest.testid = testCategory.id;
                 abnormalTest.name = testCategory.name;
                 abnormalTest.result = test.result;
                 abnormalTest.unit = test.unit;
+                abnormalTest.subtest = test.subtest;
                 abnormalTest.abnormal = test.abnormal;
                 abnormalTest.date = test.date;
                 abnormalTest.note = test.note;
